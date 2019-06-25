@@ -33,15 +33,6 @@ public class MainFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-			
-		//Question section
-		JLabel lblQuestion = new JLabel("Escolha a opção");
-		lblQuestion.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblQuestion.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblQuestion);
-			
-		//separating label and first button
-		contentPane.add(Box.createRigidArea(new Dimension(40,40)));
 		
 		//Button to generate objects
 		JButton btnAdd = new JButton("Nós e frequências aleatórias");
@@ -99,27 +90,29 @@ public class MainFrame extends JFrame {
 				lblNumFreq.setText(control.getArrayString(freq));
 				
 				//get result
-//				int[][] results = control.generateResultsMatrix(max_weight);
+				int[][] results = control.optimalSearchTree(nodes, freq, nodes.length);
 				
 				//show data
-				tableObjects.setModel(getTableModelMatrix(nodes, 10));
+				tableObjects.setModel(getTableModelMatrix(nodes.length, results));
 			}
 		});
 		
 	}
 	
-	private DefaultTableModel getTableModelMatrix( int[] weights, int max_weight) {
+	private DefaultTableModel getTableModelMatrix(int n, int results[][]) {
 			
-		Vector<String> COLUMN_NAME_VECTOR = new Vector<String>(
-				Arrays.asList(new String[] {"A", "B","C"})
-		);
+		Vector<String> COLUMN_NAME_VECTOR = new Vector<String>();
+
+		for(int i=0; i<n+1; i++) {
+			COLUMN_NAME_VECTOR.add(String.valueOf(i));
+		}
 
 		Vector<Vector<String>> matrix = new Vector<Vector<String>>();
 		
-		for(int i=0; i<weights.length + 2; i++) {
+		for(int i=0; i< n+1; i++) {
 			Vector<String> row = new Vector<String>();
 			
-			for(int j=0; j<max_weight + 2; j++) {
+			for(int j=0; j < n+1; j++) {
 				String rowText;
 				
 				if(i==0 && j==0)
@@ -128,8 +121,8 @@ public class MainFrame extends JFrame {
 					rowText = String.valueOf(j-1); 
 				else if (j==0) 
 					rowText = String.valueOf(i-1);
-				else
-					rowText = String.valueOf("a");
+				else 
+					rowText = String.valueOf(results[i-1][j-1]);
 			
                 row.add(rowText);
 			}
