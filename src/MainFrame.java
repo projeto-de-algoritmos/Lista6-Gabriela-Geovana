@@ -110,11 +110,9 @@ public class MainFrame extends JFrame {
 	
 	private DefaultTableModel getTableModelMatrix( int[] weights, int max_weight) {
 			
-		Vector<String> COLUMN_NAME_VECTOR = new Vector<String>();
-
-		for(int i=0; i<max_weight + 2; i++) {
-			COLUMN_NAME_VECTOR.add(String.valueOf(i));
-		}
+		Vector<String> COLUMN_NAME_VECTOR = new Vector<String>(
+				Arrays.asList(new String[] {"A", "B","C"})
+		);
 
 		Vector<Vector<String>> matrix = new Vector<Vector<String>>();
 		
@@ -122,7 +120,17 @@ public class MainFrame extends JFrame {
 			Vector<String> row = new Vector<String>();
 			
 			for(int j=0; j<max_weight + 2; j++) {
-				String rowText = String.valueOf(0) ;
+				String rowText;
+				
+				if(i==0 && j==0)
+					rowText = String.valueOf("");
+				else if(i==0) 
+					rowText = String.valueOf(j-1); 
+				else if (j==0) 
+					rowText = String.valueOf(i-1);
+				else
+					rowText = String.valueOf("a");
+			
                 row.add(rowText);
 			}
 			
