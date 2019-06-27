@@ -1,6 +1,7 @@
 import java.util.Random;
 
 public class Controller {
+	public int roots[][];
 	
 	public int getRandomInt(int max){
 		Random rnd = new Random();
@@ -44,10 +45,14 @@ public class Controller {
 	public int[][] optimalSearchTree(int keys[], int freq[], int n) { 
 		  
         int cost[][] = new int[n + 1][n + 1]; 
+        roots = new int[n + 1][n + 1]; 
+        
   
         //diagonal
-        for (int i = 0; i < n; i++) 
-            cost[i][i] = freq[i]; 
+        for (int i = 0; i < n; i++) {
+            cost[i][i] = freq[i];
+            roots[i][i] = i;
+        }
   
         for (int L = 2; L <= n; L++) { 
   
@@ -61,11 +66,19 @@ public class Controller {
                     // c = cost when keys[r] becomes root of this subtree 
                     int c = ((r > i) ? cost[i][r - 1] : 0) 
                             + ((r < j) ? cost[r + 1][j] : 0) + sum(freq, i, j); 
-                    if (c < cost[i][j]) 
-                        cost[i][j] = c; 
+                    if (c < cost[i][j]) {
+                    	cost[i][j] = c; 
+                    	roots[i][j] = r;
+                    }
+                        
                 } 
             } 
-        } 
+        }
+        for(int i=0; i<n; i++) {
+        	for(int j=0; j<n; j++) {
+        		System.out.println("(" + i + "," + j + ")" + ":" + roots[i][j]);
+        	}
+        }
         return cost; 
     }
 	
