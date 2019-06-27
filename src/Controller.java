@@ -14,7 +14,10 @@ public class Controller {
 		int nodes[] = new int[num_elements];
 		
 		for(int i = 0; i < num_elements; i++) {
-			nodes[i] = getRandomInt(50) + 1;
+			if(i > 0)
+				nodes[i] = nodes[i-1] + getRandomInt(50) + 1;
+			else
+				nodes[i] = getRandomInt(50) + 1;
 		}
 		
 		return nodes;
