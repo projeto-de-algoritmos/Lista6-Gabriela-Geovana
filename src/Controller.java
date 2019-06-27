@@ -2,6 +2,9 @@ import java.util.Random;
 
 public class Controller {
 	public int roots[][];
+	int cost[][];
+	int[] keys;
+	public Node root;
 	
 	public int getRandomInt(int max){
 		Random rnd = new Random();
@@ -19,7 +22,7 @@ public class Controller {
 			else
 				nodes[i] = getRandomInt(50) + 1;
 		}
-		
+		keys = nodes;
 		return nodes;
 	}
 	
@@ -47,9 +50,8 @@ public class Controller {
 	
 	public int[][] optimalSearchTree(int keys[], int freq[], int n) { 
 		  
-        int cost[][] = new int[n + 1][n + 1]; 
+        cost = new int[n + 1][n + 1]; 
         roots = new int[n + 1][n + 1]; 
-        
   
         //diagonal
         for (int i = 0; i < n; i++) {
@@ -82,6 +84,8 @@ public class Controller {
         		System.out.println("(" + i + "," + j + ")" + ":" + roots[i][j]);
         	}
         }
+        root = printTree(0, n, n);
+        
         return cost; 
     }
 	
@@ -94,4 +98,39 @@ public class Controller {
         } 
         return s; 
     } 
+
+	public Node printTree(int i, int j, int size) {
+	
+	Node p;
+	
+	if (i == j || (roots[i][j] -1) < 0 || roots[i][j] > size) {
+		p = null;
+	}
+	else {
+		
+		p = new Node(roots[i][j]);
+//		if (roots[i][j] > 0) {
+			p.left = printTree(i, roots[i][j] -1, size);
+//			System.out.println("ROOTm: " + i + " - " + j );
+//		}
+//		if (roots[i][j] < size) {
+			System.out.println("ROOTM: " + i + " - " + j );
+			p.right = printTree(roots[i][j], j, size);
+//		}
+	}
+	return p;
+//		OBST *CONSTRUCT_OBST(int i, int j){
+//			OBST *p;
+//			if(i == j)
+//				p = NULL;
+//			else{
+//				p = new OBST;
+//				p->KEY = KEYS[R[i][j]];
+//				p->left = CONSTRUCT_OBST(i, R[i][j] - 1); //left subtree
+//				p->right = CONSTRUCT_OBST(R[i][j], j); //right subtree
+//			}
+//			return p;
+//		}
+//	http://software.ucv.ro/~cmihaescu/ro/laboratoare/SDA/docs/arboriOptimali_en.pdf
+	}
 }
