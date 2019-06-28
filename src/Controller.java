@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Controller {
@@ -5,6 +6,7 @@ public class Controller {
 	int cost[][];
 	int[] keys;
 	public Node root;
+	ArrayList<Integer> addedNodes = new ArrayList<Integer>();
 	
 	public int getRandomInt(int max){
 		Random rnd = new Random();
@@ -84,7 +86,9 @@ public class Controller {
         		System.out.println("(" + i + "," + j + ")" + ":" + roots[i][j]);
         	}
         }
-        root = printTree(0, n, n);
+        
+        root = printTree(0, n-1, n);
+        System.out.println("Raíz PRINT: " + root.key);
         
         return cost; 
     }
@@ -100,37 +104,22 @@ public class Controller {
     } 
 
 	public Node printTree(int i, int j, int size) {
-	
-	Node p;
-	
-	if (i == j || (roots[i][j] -1) < 0 || roots[i][j] > size) {
-		p = null;
-	}
-	else {
-		
-		p = new Node(roots[i][j]);
-//		if (roots[i][j] > 0) {
-			p.left = printTree(i, roots[i][j] -1, size);
-//			System.out.println("ROOTm: " + i + " - " + j );
-//		}
-//		if (roots[i][j] < size) {
-			System.out.println("ROOTM: " + i + " - " + j );
-			p.right = printTree(roots[i][j], j, size);
-//		}
-	}
-	return p;
-//		OBST *CONSTRUCT_OBST(int i, int j){
-//			OBST *p;
-//			if(i == j)
-//				p = NULL;
-//			else{
-//				p = new OBST;
-//				p->KEY = KEYS[R[i][j]];
-//				p->left = CONSTRUCT_OBST(i, R[i][j] - 1); //left subtree
-//				p->right = CONSTRUCT_OBST(R[i][j], j); //right subtree
-//			}
-//			return p;
-//		}
-//	http://software.ucv.ro/~cmihaescu/ro/laboratoare/SDA/docs/arboriOptimali_en.pdf
+//		http://software.ucv.ro/~cmihaescu/ro/laboratoare/SDA/docs/arboriOptimali_en.pdf
+		Node p;
+		if (i == j) {
+			p = new Node(i, keys[i]);
+		}
+		else {
+			p = new Node(roots[i][j], keys[roots[i][j]]);
+			if (p.value> 0 && i <= p.value -1) {
+				p.left = printTree(i, p.value -1 , size);				
+				System.out.println(p.left.key + " é filho esquerdo de " + p.key);
+			}
+			if (p.value < size && p.value + 1 <= j) {
+				p.right = printTree(p.value + 1, j, size);
+				System.out.println(p.right.key + " é filho direito de " + p.key);
+			}
+		}
+		return p;
 	}
 }
