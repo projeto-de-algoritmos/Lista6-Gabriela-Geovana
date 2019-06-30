@@ -6,7 +6,6 @@ public class Controller {
 	int cost[][];
 	int[] keys;
 	public Node root;
-	ArrayList<Integer> addedNodes = new ArrayList<Integer>();
 	
 	public int getRandomInt(int max){
 		Random rnd = new Random();
@@ -88,7 +87,7 @@ public class Controller {
         }
         
         root = printTree(0, n-1, n);
-        System.out.println("Raíz PRINT: " + root.key);
+        System.out.println("Raï¿½z PRINT: " + root.key);
         
         return cost; 
     }
@@ -113,11 +112,11 @@ public class Controller {
 			p = new Node(roots[i][j], keys[roots[i][j]]);
 			if (p.value> 0 && i <= p.value -1) {
 				p.left = printTree(i, p.value -1 , size);				
-				System.out.println(p.left.key + " é filho esquerdo de " + p.key);
+				System.out.println(p.left.key + " ï¿½ filho esquerdo de " + p.key);
 			}
 			if (p.value < size && p.value + 1 <= j) {
 				p.right = printTree(p.value + 1, j, size);
-				System.out.println(p.right.key + " é filho direito de " + p.key);
+				System.out.println(p.right.key + " ï¿½ filho direito de " + p.key);
 			}
 		}
 		return p;
