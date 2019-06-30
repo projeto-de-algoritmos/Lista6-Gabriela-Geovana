@@ -52,7 +52,7 @@ class DrawTree extends JComponent {
             g2.draw(circle);
             g2.fill(circle);
             g2.setPaint(Color.white);
-            g2.drawString(n.value + "", x + 10, y + 18);
+            g2.drawString(n.key + "", x + 10, y + 18);
         }         
 
         void inorder(Node r, int x1, int x2, int y) {
@@ -61,12 +61,12 @@ class DrawTree extends JComponent {
 
             inorder(r.left, x1, (x1 + x2) / 2, y + 40);
             
-            Node parent = getParent(r.value);
+            Node parent = r.parent;
             
             if (parent == null)
                 draw(x1, x2, y, r, 0);
             else {
-                if (parent.value < r.value)
+                if (parent.key < r.key)
                     draw(x1, x2, y, r , 2);
                 else
                     draw(x1, x2, y, r, 1);

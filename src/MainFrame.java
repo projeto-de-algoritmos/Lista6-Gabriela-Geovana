@@ -1,8 +1,8 @@
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.Vector;
 
 import javax.swing.Box;
@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class MainFrame extends JFrame {
 	
 	private Controller control = new Controller();
+	private DrawTree treePanel = new DrawTree();
 	
 	public MainFrame() {
 		
@@ -78,6 +79,8 @@ public class MainFrame extends JFrame {
 	    tableObjects.setMaximumSize(new Dimension(500, 150 ));
 		contentPane.add(tableObjects);
 		
+		contentPane.add(treePanel);
+		
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -94,10 +97,22 @@ public class MainFrame extends JFrame {
 				
 				//show data
 				tableObjects.setModel(getTableModelMatrix(nodes.length, results));
+				paintTree(control.root);
 			}
 		});
 		
 	}
+	
+
+	private void paintTree(Node root) {
+		
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		
+		int xSize = (int)tk.getScreenSize().getWidth() - 150;
+		treePanel.init(root, xSize);
+	
+		treePanel.repaint();
+}
 	
 	private DefaultTableModel getTableModelMatrix(int n, int results[][]) {
 			

@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+
 import java.util.Random;
 
 public class Controller {
@@ -111,11 +111,13 @@ public class Controller {
 		else {
 			p = new Node(roots[i][j], keys[roots[i][j]]);
 			if (p.value> 0 && i <= p.value -1) {
-				p.left = printTree(i, p.value -1 , size);				
+				p.left = printTree(i, p.value -1 , size);
+				p.left.parent = p;
 				System.out.println(p.left.key + " � filho esquerdo de " + p.key);
 			}
 			if (p.value < size && p.value + 1 <= j) {
 				p.right = printTree(p.value + 1, j, size);
+				p.right.parent = p;
 				System.out.println(p.right.key + " � filho direito de " + p.key);
 			}
 		}
